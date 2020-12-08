@@ -1,12 +1,15 @@
 version: '3'
 services:
   web:
-    image: jenkins/jenkins:latest
+    build:
+      context: .
+      dockerfile: Dockerfile
     restart: always
     networks:
       - web
     volumes:
       - ./jenkins_home:/var/jenkins_home
+      - /var/run/docker.sock:/var/run/docker.sock
     labels:
       - "traefik.docker.network=web"
       - "traefik.frontend.rule=Host:jenkins.local"
